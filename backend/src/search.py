@@ -3,8 +3,8 @@ from typing import Any
 
 from langchain_groq import ChatGroq
 
-from backend.src.config import get_groq_api_key, get_llm_model_name
-from backend.src.vectorstore import FaissVectorStore
+from .config import get_groq_api_key, get_llm_model_name
+from .vectorstore import FaissVectorStore
 
 KNOWLEDGE_PROMPT = """You are an ITIL-aligned L2 support assistant for a finance enterprise.
 Answer ONLY from the provided context. If the context is insufficient, say so and recommend escalation.
