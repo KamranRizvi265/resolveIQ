@@ -1,6 +1,6 @@
-from backend.src.data_loader import load_documents
-from backend.src.vectorstore import FaissVectorStore
-from backend.src.search import RAGSearch
+from src.data_loader import load_documents
+from src.vectorstore import FaissVectorStore
+from src.search import RAGSearch
 
 # Example usage
 
