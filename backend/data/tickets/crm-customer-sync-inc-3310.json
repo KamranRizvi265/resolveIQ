@@ -1,0 +1,8 @@
+{
+  "ticket_id": "FINOPS-3310",
+  "source": "jira",
+  "system": "CRM",
+  "error_code": "CRM-SYNC-901",
+  "description": "Nightly CRM-to-ERP customer master sync job CRM_CUST_SYNC_NIGHT failed at record 14,502 of 89,000. Error CRM-SYNC-901: Duplicate external ID conflict — source record CUST-88421 maps to existing ERP BP 2000148892 with mismatched tax ID. 74,498 records synced before failure; delta sync halted.",
+  "resolution": "Identified duplicate customer created manually in ERP during data migration (BP 2000148892) conflicting with CRM golden record CUST-88421. Merged duplicate in ERP using transaction XD99, updated CRM external ID mapping table crm_erp_xref, and re-ran sync from checkpoint record 14,502. Full sync completed; reconciliation report shows 89,000/89,000 matched."
+}

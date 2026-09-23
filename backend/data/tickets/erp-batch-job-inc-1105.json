@@ -1,0 +1,8 @@
+{
+  "ticket_id": "FINOPS-1105",
+  "source": "jira",
+  "system": "ERP",
+  "error_code": "F5 001",
+  "description": "Nightly FI posting batch job FI_POST_NIGHTLY terminated abnormally at step 4 (document posting) with short dump F5 001: 'Posting period 007/2026 not open for company code 1000'. 4,892 documents remain unposted. Morning finance ops unable to run payment run F110 until posting completes.",
+  "resolution": "Month-end close team had closed posting period 007/2026 in OB52 but batch scheduler still targeted period 007. Opened posting period 008/2026 for company code 1000, updated batch variant FI_POST_NIGHTLY to use dynamic period derivation via user exit ZFI_PERIOD_GET, and restarted job. All 4,892 documents posted. Added pre-flight check in job wrapper to validate open periods before execution."
+}

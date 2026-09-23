@@ -1,0 +1,8 @@
+{
+  "ticket_id": "FINOPS-2290",
+  "source": "jira",
+  "system": "ERP",
+  "error_code": "FI-GL-007",
+  "description": "Month-end GL reconciliation report RECON_GL_SUB_001 shows €2.4M break between sub-ledger AR and GL account 120000 (Trade Receivables). Error FI-GL-007 flagged 312 unposted interface documents from OMS revenue recognition feed. Finance controller blocked period close pending resolution.",
+  "resolution": "Root cause was OMS revenue interface job posting to wrong company code (1010 instead of 1000) for EU marketplace orders after config change CHG0048212. Reversed 312 erroneous postings via FB08, corrected company code mapping in table ZOMS_GL_MAP, and re-posted interface batch IF_OMS_REV_202607. Reconciliation break cleared; controller approved period close."
+}

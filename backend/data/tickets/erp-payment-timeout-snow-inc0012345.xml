@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<incident>
+  <number>INC0012345</number>
+  <source>servicenow</source>
+  <system>ERP</system>
+  <error_code>PI-1234</error_code>
+  <description>Automated alert from SAP batch monitor: payment interface job PAY_IF_OUT_001 exceeded 120s timeout threshold. Application log on APP-ERP-PRD-02 contains 'PI-1234: Payment gateway handshake timeout — host payment-gw-prod-01'. 312 payment documents in status TRANSFER_PENDING. P2 impact — treasury settlement window closes in 4 hours.</description>
+  <resolution>Network team confirmed firewall rule change CHG0047899 blocked outbound HTTPS to payment-gw-prod-01 port 8443. Restored rule in FW-DC-PROD-01, validated TLS handshake from APP-ERP-PRD-02 via openssl s_client. Re-executed payment batch; 312/312 documents transferred. Documented firewall change review requirement for payment gateway CIs in CMDB.</resolution>
+</incident>

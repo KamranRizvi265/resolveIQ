@@ -1,0 +1,8 @@
+{
+  "ticket_id": "FINOPS-9901",
+  "source": "jira",
+  "system": "ITSM",
+  "error_code": "ITSM-BRIDGE-404",
+  "description": "ServiceNow incident INC0019876 created by monitoring alert did not appear in Jira project FINOPS within 30-minute SLA. Bridge integration log shows ITSM-BRIDGE-404: Target Jira project key 'FINOPS' not found — API returned 404. 23 ServiceNow incidents queued in retry table sn_jira_outbound since 09:00 UTC.",
+  "resolution": "Jira project FINOPS was renamed to FINOPS-SUP during ITSM reorganization (CHG0049103) but ServiceNow outbound REST message endpoint still referenced old project key. Updated sys_rest_message 'Jira_Create_Issue' base path and project mapping table u_sn_jira_project_map. Replayed 23 queued incidents via script Include 'SNJiraBridgeReplay'. Verified bidirectional sync with test incident INC0019900. Updated CMDB integration record CI00044521."
+}

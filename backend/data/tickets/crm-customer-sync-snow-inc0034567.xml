@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<incident>
+  <number>INC0034567</number>
+  <source>servicenow</source>
+  <system>CRM</system>
+  <error_code>CRM-SYNC-901</error_code>
+  <description>CRM operations team reported customer updates not reflecting in ERP since 06:00 UTC. Integration log on CRM-INT-PRD-01 shows CRM-SYNC-901 at record batch offset 8200: 'Duplicate external ID conflict — CUST-77210'. Sync job CRM_CUST_SYNC_NIGHT in failed state; 8200 of 89000 records processed.</description>
+  <resolution>Data steward identified CUST-77210 had tax ID updated in CRM but ERP still held old tax ID on BP 2000130044, triggering duplicate detection rule DUP_TAX_ID_V2. Applied approved data correction in ERP (BP maintenance transaction FD32), updated sync conflict resolution policy to 'CRM wins' for tax ID field, and resumed sync from offset 8200. Full sync completed at 11:30 UTC. No customer-facing impact after verification with CRM team.</resolution>
+</incident>

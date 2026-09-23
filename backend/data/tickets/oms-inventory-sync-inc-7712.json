@@ -1,0 +1,8 @@
+{
+  "ticket_id": "FINOPS-7712",
+  "source": "jira",
+  "system": "OMS",
+  "error_code": "OMS-INV-210",
+  "description": "Inventory levels for SKU WIDGET-PRO-500 show 0 available in OMS storefront but WMS reports 1,240 units on hand at warehouse WH-EU-03. Sync job INV_SYNC_WMS_OMS failed with OMS-INV-210: WMS API rate limit exceeded (429) after 500 requests. 2,300 SKUs affected; overselling risk on 14 active promotions.",
+  "resolution": "WMS vendor changed API rate limit from 1000/min to 500/min without notice. Implemented exponential backoff and request batching in sync service inv-sync-worker, reduced sync frequency from 5min to 15min for non-critical SKUs, and ran full inventory reconciliation script reconcile_wms_oms.py. All 2,300 SKUs aligned within 0.2% tolerance. Vendor notified via support case WMS-2026-8841."
+}
