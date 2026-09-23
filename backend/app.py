@@ -1,18 +1,35 @@
-from src.data_loader import load_documents
-from src.vectorstore import FaissVectorStore
-from src.search import RAGSearch
+import asyncio
+from contextlib import asynccontextmanager
+from pathlib import Path
 
-# Example usage
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
-if __name__ == "__main__":
-    # data_path = "data"
-    # documents = load_documents(data_path)
-    store = FaissVectorStore(persist_dir="faiss_store")
-    # store.build_from_documents(documents)
-    store.load()  # Load existing index if available
-    # print(store.query("What is Quantum Computing?", top_k=3))  # Example query
+from api.routes import router
 
-    rag_search = RAGSearch()
-    query = "find me each document that has the error code  PI-1234: Payment gateway handshake timeout — hos"
-    summary = rag_search.search_and_summarize(query, top_k=3)
-    print("Summary:", summary)
+
+BASE_DIR = Path(__file__).resolve().parent
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    app.state.persist_dir = str(BASE_DIR / "faiss_store")
+    app.state.search_service = None
+    app.state.search_service_lock = asyncio.Lock()
+    yield
+
+
+app = FastAPI(
+    title="resolveIQ API",
+    version="0.1.0",
+    lifespan=lifespan,
+)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["*"],
+)
+app.include_router(router)
+
