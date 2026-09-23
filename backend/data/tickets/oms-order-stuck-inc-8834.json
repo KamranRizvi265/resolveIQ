@@ -1,0 +1,8 @@
+{
+  "ticket_id": "FINOPS-8834",
+  "source": "jira",
+  "system": "OMS",
+  "error_code": "OMS-4402",
+  "description": "Customer order ORD-20260731-118293 has been in 'Pending Payment' status for 6 hours despite successful card authorization in payment gateway. OMS event log shows OMS-4402: Payment callback not received within SLA window (300s). Order allocation is blocked; customer contacted support twice.",
+  "resolution": "Payment gateway webhook queue had 12,000 unprocessed messages due to stuck consumer pod oms-pay-consumer-3. Scaled consumer group from 3 to 6 replicas, purged poison message on queue pay-callback-dlq (correlation_id cb-8812-failed), and manually replayed payment confirmation for ORD-20260731-118293. Order transitioned to 'Payment Confirmed' and entered fulfillment queue. Added alert on consumer lag > 5000."
+}

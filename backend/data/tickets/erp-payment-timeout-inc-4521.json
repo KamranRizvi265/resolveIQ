@@ -1,0 +1,8 @@
+{
+  "ticket_id": "FINOPS-4521",
+  "source": "jira",
+  "system": "ERP",
+  "error_code": "PI-1234",
+  "description": "Payment batch job PAY_IF_OUT_001 failed at 02:14 UTC. Monitor F110 shows 847 line items stuck in TRANSFER_PENDING. Log excerpt: 'PI-1234: Payment gateway handshake timeout — host payment-gw-prod-01'. Finance team reports outbound SEPA payments not reaching bank confirmation status since midnight batch.",
+  "resolution": "Verified payment gateway TLS certificate on payment-gw-prod-01 expired 2026-07-28. Renewed certificate via PKI team, restarted gateway service, and re-ran failed payment batch with transaction F110 using variant PAY_RETRY_001. All 847 items posted successfully. Confirmed no duplicate payments via PAY_DUP_CHECK report."
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<incident>
+  <number>INC0023456</number>
+  <source>servicenow</source>
+  <system>OMS</system>
+  <error_code>OMS-4402</error_code>
+  <description>Business user reported 45 orders stuck in Pending Payment since 14:00 UTC. OMS dashboard shows error OMS-4402 on payment callback processor. Splunk query confirms payment gateway returning HTTP 503 on /api/v2/callback endpoint. Affected orders include high-value B2B transactions totaling €890K.</description>
+  <resolution>Payment gateway vendor PG-VENDOR-01 experienced regional outage (status page incident PG-2026-0728). Enabled OMS fallback mode OMS_PAY_FALLBACK_ASYNC which queues callbacks locally. Once vendor restored service at 16:45 UTC, replayed 45 queued callbacks via admin endpoint /admin/payments/replay. All orders transitioned to Payment Confirmed. Created problem record PRB004412 for vendor SLA review.</resolution>
+</incident>
