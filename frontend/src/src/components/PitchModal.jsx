@@ -108,7 +108,7 @@ export default function PitchModal({ isOpen, onClose }) {
                 </span>
                 <span className="text-slate-400">→</span>
                 <span className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-amber-700 font-semibold shadow-xs">
-                  4. Groq LLM Synthesis
+                  4. Snowflake Cortex Synthesis
                 </span>
               </div>
 

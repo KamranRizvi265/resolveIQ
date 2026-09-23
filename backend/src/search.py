@@ -1,9 +1,13 @@
 import os
 from typing import Any
 
-from langchain_groq import ChatGroq
+from langchain_openai import ChatOpenAI
 
-from .config import get_groq_api_key, get_llm_model_name
+from .config import (
+    get_llm_model_name,
+    get_snowflake_cortex_base_url,
+    get_snowflake_pat,
+)
 from .vectorstore import FaissVectorStore
 
 KNOWLEDGE_PROMPT = """You are an ITIL-aligned L2 support assistant for a finance enterprise.
@@ -62,10 +66,22 @@ class RAGSearch:
         else:
             self.vectorstore.load()
 
-        groq_api_key = get_groq_api_key()
+        snowflake_pat = get_snowflake_pat()
+        cortex_base_url = get_snowflake_cortex_base_url()
         model = llm_model or get_llm_model_name()
-        self.llm = ChatGroq(api_key=groq_api_key, model=model)
-        print(f"[INFO] Groq LLM initialized: {model}")
+        if not snowflake_pat:
+            raise RuntimeError("SNOWFLAKE_PAT is not configured")
+        if not cortex_base_url:
+            raise RuntimeError(
+                "Configure SNOWFLAKE_ACCOUNT_IDENTIFIER or "
+                "SNOWFLAKE_CORTEX_BASE_URL"
+            )
+        self.llm = ChatOpenAI(
+            api_key=snowflake_pat,
+            base_url=cortex_base_url,
+            model=model,
+        )
+        print(f"[INFO] Snowflake Cortex LLM initialized: {model}")
 
     @staticmethod
     def _distance_to_relevance(distance: float) -> float:
