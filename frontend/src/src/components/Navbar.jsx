@@ -1,4 +1,3 @@
-import React from 'react';
 import { Zap } from 'lucide-react';
 
 export default function Navbar() {
@@ -6,7 +5,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-40 w-full border-b border-slate-200/70 bg-white/70 backdrop-blur-xl shadow-xs transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
 
-        {/* Brand / Logo with Electric Glow */}
+       
         <div className="flex items-center gap-3.5">
           <div className="relative group cursor-pointer">
             <div className="absolute -inset-1 bg-linear-to-r from-blue-600 to-indigo-600 rounded-2xl blur-md opacity-40 group-hover:opacity-80 transition duration-300"></div>

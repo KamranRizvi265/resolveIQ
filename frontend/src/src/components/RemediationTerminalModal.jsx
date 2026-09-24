@@ -58,7 +58,7 @@ export default function RemediationTerminalModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-md animate-in fade-in duration-200">
       <div className="w-full max-w-2xl bg-slate-950 rounded-3xl border border-slate-800 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col font-mono text-xs animate-in zoom-in-95 duration-200">
         
-        {/* Terminal Header with Glowing Dots */}
+       
         <div className="bg-slate-900/90 px-5 py-3.5 border-b border-slate-800/90 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="flex items-center gap-1.5">

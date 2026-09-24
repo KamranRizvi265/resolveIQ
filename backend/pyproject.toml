@@ -18,7 +18,6 @@ dependencies = [
     "aiosqlite>=0.22.1",
     "fastapi>=0.139.0",
     "fastapi-users[sqlalchemy]>=15.0.5",
-    "python-dotenv>=1.2.2",
     "uvicorn[standard]>=0.50.0",
     "langchain-openai>=1.6.5",
 ]
