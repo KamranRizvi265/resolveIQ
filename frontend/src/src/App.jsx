@@ -10,19 +10,20 @@ import { SAMPLE_INCIDENTS, DEMO_RESPONSES } from './data/sampleData';
 import { sound } from './utils/audio';
 
 export default function App() {
-  const [query, setQuery] = useState("Payment gateway handshake timeout PI-1234 connection reset by peer");
+  const [query, setQuery] = useState("");
   const [mode, setMode] = useState('diagnostic');
   const [topK, setTopK] = useState(5);
 
-  const [activeIncident, setActiveIncident] = useState(SAMPLE_INCIDENTS[0]);
+  const [activeIncident, setActiveIncident] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [diagnosticStep, setDiagnosticStep] = useState(1);
-  const [searchResult, setSearchResult] = useState(DEMO_RESPONSES["INC-4521"].diagnostic);
+  const [searchResult, setSearchResult] = useState(null);
   const [highlightedSourceId, setHighlightedSourceId] = useState(null);
 
   const [terminalOpen, setTerminalOpen] = useState(false);
 
   const handleSearch = async (overrideIncident = null, overrideMode = null) => {
+    if (!query.trim()) return;
     setIsLoading(true);
     setDiagnosticStep(1);
 
@@ -95,9 +96,10 @@ export default function App() {
 
   const handleModeChange = (newMode) => {
     setMode(newMode);
+    if (!searchResult) return;
     if (activeIncident && DEMO_RESPONSES[activeIncident.id] && DEMO_RESPONSES[activeIncident.id][newMode]) {
       setSearchResult(DEMO_RESPONSES[activeIncident.id][newMode]);
-    } else {
+    } else if (query.trim()) {
       handleSearch(activeIncident, newMode);
     }
   };
@@ -154,26 +156,28 @@ export default function App() {
         </section>
 
         {/* Dual-Column Layout: Left (Diagnostic) & Right (Evidence) */}
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {searchResult && (
+          <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start animate-in fade-in duration-300">
 
-          <div className="lg:col-span-7 space-y-4">
-            <DiagnosticResult
-              result={searchResult}
-              remediationCmd={activeIncident?.remediationCmd}
-              remediationTitle={activeIncident?.remediationScriptTitle}
-              onExecuteRemediation={() => setTerminalOpen(true)}
-              onHighlightSource={handleHighlightSource}
-            />
-          </div>
+            <div className="lg:col-span-7 space-y-4">
+              <DiagnosticResult
+                result={searchResult}
+                remediationCmd={activeIncident?.remediationCmd}
+                remediationTitle={activeIncident?.remediationScriptTitle}
+                onExecuteRemediation={() => setTerminalOpen(true)}
+                onHighlightSource={handleHighlightSource}
+              />
+            </div>
 
-          <div className="lg:col-span-5 space-y-4">
-            <EvidenceMatrix
-              sources={searchResult?.sources || []}
-              highlightedSourceId={highlightedSourceId}
-            />
-          </div>
+            <div className="lg:col-span-5 space-y-4">
+              <EvidenceMatrix
+                sources={searchResult?.sources || []}
+                highlightedSourceId={highlightedSourceId}
+              />
+            </div>
 
-        </section>
+          </section>
+        )}
 
       </main>
 
