@@ -18,9 +18,9 @@
 
 <br />
 
-> **Finance downtime costs $9,000/minute.** Operations engineers lose 35+ minutes manually searching runbooks, wikis, and historical tickets.
+> **Finance downtime costs $9,000/minute.** Operations engineers lose 35+ minutes manually searching runbooks, wikis and historical tickets.
 >
-> **ResolveIQ cuts Mean Time To Resolution (MTTR) by 72.4%** — bringing 35+ minute diagnostic cycles down to under 10 minutes with verifiable source citations.
+> **ResolveIQ cuts Mean Time To Resolution (MTTR) by 72.4%** - bringing 35+ minute diagnostic cycles down to under 10 minutes with verifiable source citations.
 
 <br />
 
@@ -41,9 +41,9 @@ Enterprise financial operations, trading desks, and ERP ecosystems operate under
 
 | Pain Point | Operational Impact |
 |---|---|
-| **Manual Runbook Sifting** | Engineers dig through 100+ page PDF SOPs, fragmented wikis, and legacy runbooks during critical outages. |
-| **Siloed Historical Tickets** | Past incident resolutions are trapped across ERP, OMS, CRM, and ITSM (ServiceNow/Jira) systems with zero cross-system retrieval. |
-| **P1/P2 SLA Breaches** | Tier-1 financial resolution target is **< 30 minutes** — yet engineers spend over 20 minutes merely locating the right documentation. |
+| **Manual Runbook Sifting** | Engineers dig through 100+ page PDF SOPs, fragmented wikis and legacy runbooks during critical outages. |
+| **Siloed Historical Tickets** | Past incident resolutions are trapped across ERP, OMS, CRM and ITSM (ServiceNow/Jira) systems with zero cross-system retrieval. |
+| **P1/P2 SLA Breaches** | Tier-1 financial resolution target is **< 30 minutes** - yet engineers spend over 20 minutes merely locating the right documentation. |
 | **Tribal Knowledge Vulnerability** | Critical remediation commands and triage workarounds live only in senior engineers' heads, creating severe operational bottlenecks. |
 | **Audit & Compliance Gaps** | Generic AI tools hallucinate non-existent commands or fail to provide deterministic citation chains required by ITIL and regulatory audits. |
 
@@ -51,7 +51,7 @@ Enterprise financial operations, trading desks, and ERP ecosystems operate under
 
 ## 💡 The Solution
 
-**ResolveIQ** is an autonomous incident copilot powered by **Snowflake Cortex AI** and **FAISS semantic retrieval**. It ingests multi-source runbooks and historical incident tickets, extracts institutional knowledge, and executes ITIL-constrained diagnostic and knowledge-synthesis workflows grounded strictly in source evidence.
+**ResolveIQ** is an autonomous incident copilot powered by **Snowflake Cortex AI** and **FAISS semantic retrieval**. It ingests multi-source runbooks and historical incident tickets, extracts institutional knowledge and executes ITIL-constrained diagnostic and knowledge-synthesis workflows grounded strictly in source evidence.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -81,7 +81,7 @@ Enterprise financial operations, trading desks, and ERP ecosystems operate under
 │  │ 🖥️ React 19 + Vite + Tailwind CSS 4 Command Center                   │  │
 │  │  • Live Incident Stream    • Dual Intelligence Modes (RCA vs SOP)     │  │
 │  │  • Semantic Evidence Cards • Interactive Remediation Terminal Modal   │  │
-│  │  • Live/Sandbox Switch     • Audio SFX & Built-in Hackathon Pitch Deck│  │
+│  │                                                                       |
 │  └───────────────────────────────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -98,14 +98,14 @@ ResolveIQ integrates with **Snowflake Cortex AI** as its enterprise intelligence
 
 **🤖 Cortex LLM Inference**
 
-Snowflake Cortex models (e.g. `openai-gpt-oss-120b`, `mistral-large2`, `llama3.3-70b`) synthesize natural-language incident queries against enterprise context to generate ranked root causes, error signatures, and escalation criteria.
+Snowflake Cortex models (e.g. `openai-gpt-oss-120b`, `mistral-large2`, `llama3.3-70b`) synthesize natural-language incident queries against enterprise context to generate ranked root causes, error signatures and escalation criteria.
 
 </td>
 <td width="50%">
 
 **📄 Multi-Format Ingestion Pipeline**
 
-Robust loaders parse PDF runbooks, ServiceNow XML records, JSON incident dumps, text files, and spreadsheets, normalizing disparate IT silos into structured LangChain documents.
+Robust loaders parse PDF runbooks, ServiceNow XML records, JSON incident dumps, text files and spreadsheets, normalizing disparate IT silos into structured LangChain documents.
 
 </td>
 </tr>
@@ -143,9 +143,9 @@ Switch seamlessly between two operational personas:
 _Target: SREs, DevOps & L2/L3 On-Call Engineers_
 
 - **Probable Root Cause**: Ranked primary and secondary hypotheses backed by inline source tags `[Source N]`.
-- **Similar Patterns**: Identifies recurring error codes, system signatures, and historical incidents.
+- **Similar Patterns**: Identifies recurring error codes, system signatures and historical incidents.
 - **Suggested Resolution**: Numbered, actionable remediation steps.
-- **Escalation Protocol**: Explicit conditions under which to escalate to L3, vendor, or Problem Management.
+- **Escalation Protocol**: Explicit conditions under which to escalate to L3, vendor or Problem Management.
 - **Confidence Rating**: High / Medium / Low score evaluated against context coverage.
 
 </td>
@@ -166,13 +166,12 @@ _Target: L1 Helpdesk, Operations & NOC Engineers_
 
 ### 🎛️ Command Center Interface
 
-- **Live Incident Stream**: Horizontal ticker displaying active enterprise incidents (`INC-4521`, `INC-2290`, `INC-3310`, `INC-8834`, `INC-9901`) with severity badges (P1-CRITICAL through P3-MEDIUM), system tags, SLA countdown timers, and 1-click loading.
-- **AI Search Console**: Natural-language query bar with `Ctrl+K` keyboard shortcut, quick scenario chips, search mode toggle, and vector depth slider (top-k 1 to 10).
-- **Interactive Evidence Matrix**: Source document cards displaying document type (Runbook vs Historical Ticket), relevance score percentage, vector distance, and preview text.
-- **Remediation Terminal**: Simulated shell terminal with pre-populated runbook remediation commands, 1-click clipboard copy, and interactive execution simulation.
+- **Live Incident Stream**: Horizontal ticker displaying active enterprise incidents (`INC-4521`, `INC-2290`, `INC-3310`, `INC-8834`, `INC-9901`) with severity badges (P1-CRITICAL through P3-MEDIUM), system tags, SLA countdown timers and 1-click loading.
+- **AI Search Console**: Natural-language query bar with `Ctrl+K` keyboard shortcut, quick scenario chips, search mode toggle and vector depth slider (top-k 1 to 10).
+- **Interactive Evidence Matrix**: Source document cards displaying document type (Runbook vs Historical Ticket), relevance score percentage, vector distance and preview text.
+- **Remediation Terminal**: Simulated shell terminal with pre-populated runbook remediation commands, 1-click clipboard copy and interactive execution simulation.
 - **Live / Sandbox Toggle**: Switch between live Snowflake Cortex AI backend calls and an embedded high-fidelity offline sandbox for guaranteed demo reliability.
-- **Audio Feedback Suite**: Synthesized Web Audio API sound effects for clicks, query execution, terminal runs, and status alerts.
-- **Built-in Pitch Deck**: Modal containing the problem statement, market opportunity, technical architecture, and business ROI.
+- **Audio Feedback Suite**: Synthesized Web Audio API sound effects for clicks, query execution, terminal runs and status alerts.
 
 ---
 
@@ -432,7 +431,7 @@ Content-Type: application/json
 | **API Server** | **FastAPI + Uvicorn** | Async ASGI backend with Pydantic request validation and non-blocking thread execution |
 | **Frontend Framework** | **React 19 + Vite 8** | Modern reactive component architecture with sub-second HMR |
 | **Styling** | **Tailwind CSS 4** | Glassmorphic finance-grade dark UI with responsive grids |
-| **Document Ingestion** | **PyMuPDF + pypdf** | Multi-format extraction from PDF runbooks, ServiceNow XML, JSON, CSV, and TXT |
+| **Document Ingestion** | **PyMuPDF + pypdf** | Multi-format extraction from PDF runbooks, ServiceNow XML, JSON, CSV and TXT |
 | **Audio Engine** | **Web Audio API** | Real-time synthesized interaction sound effects |
 
 </div>
@@ -482,19 +481,6 @@ Provides pre-populated, verified shell scripts with an interactive terminal simu
 | **Interactive Terminal Scripts** | ❌ Static text | ⚠️ Unverified suggestions | ✅ **Pre-populated & Actionable** |
 | **Offline Enterprise Sandbox Fallback** | ❌ No | ❌ Hard dependency | ✅ **Built-in Resilient Fallback** |
 | **Audit-Ready Citation Chains** | ❌ No | ❌ No | ✅ **Source ID Traceability** |
-
----
-
-## 🗺️ Roadmap
-
-- [x] **Snowflake Cortex AI Integration** — Direct REST API integration for enterprise-grade LLM inference.
-- [x] **Multi-format Ingestion** — Automatic parsing for PDF runbooks and ServiceNow JSON/XML incident dumps.
-- [x] **Dual Persona Engine** — Diagnostic RCA mode and procedural Knowledge SOP mode.
-- [x] **Simulated Remediation Terminal** — Runbook script execution with clipboard integration.
-- [ ] **Live Webhook Ingestion** — Real-time synchronization with ServiceNow, Jira Service Management, and PagerDuty webhooks.
-- [ ] **Automated Orchestration** — Integration with Ansible Automation Platform and Terraform for live 1-click remediation.
-- [ ] **Multi-Tenant Index Isolation** — Workspace-isolated vector spaces for enterprise multi-department deployment.
-- [ ] **Observability & Analytics** — Prometheus/Grafana dashboards for token latency, vector similarity metrics, and MTTR reduction tracking.
 
 ---
 
