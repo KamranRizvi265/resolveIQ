@@ -8,9 +8,14 @@ import {
   Loader2,
   CheckCircle2,
   Sparkles,
-  Command
+  Command,
+  ShieldCheck,
+  Lock,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 import { sound } from '../utils/audio';
+import { analyzePII } from '../utils/piiHasher';
 
 const DIAGNOSTIC_EXAMPLES = [
   "Find similar incidents for error code OMS-4402",
@@ -33,10 +38,15 @@ export default function SearchConsole({
   setTopK,
   onSearch,
   isLoading,
-  diagnosticStep
+  diagnosticStep,
+  onOpenPiiModal
 }) {
   const [showConfig, setShowConfig] = useState(false);
+  const [showPiiPreview, setShowPiiPreview] = useState(false);
   const inputRef = useRef(null);
+
+  const piiAnalysis = analyzePII(query);
+
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -200,12 +210,103 @@ export default function SearchConsole({
           </div>
         </form>
 
+        {/* Real-time In-Flight PII Protection Banner */}
+        {piiAnalysis.hasPII && (
+          <div className="mt-3.5 p-3.5 rounded-2xl bg-linear-to-r from-emerald-50/90 via-teal-50/70 to-blue-50/90 border border-emerald-300/80 shadow-xs animate-in fade-in slide-in-from-top-2 duration-200">
+            <div className="flex flex-wrap items-center justify-between gap-2.5">
+              <div className="flex items-center gap-2">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                </span>
+                <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                <span className="text-xs font-bold text-emerald-950 font-sans">
+                  In-Flight PII Protection Active:
+                </span>
+                <span className="text-xs font-extrabold text-emerald-800 bg-white/90 px-2 py-0.5 rounded-lg border border-emerald-200 shadow-2xs">
+                  {piiAnalysis.entityCount} {piiAnalysis.entityCount === 1 ? 'Identifier' : 'Identifiers'} Pseudonymized
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    sound.playClick();
+                    setShowPiiPreview(!showPiiPreview);
+                  }}
+                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-white hover:bg-emerald-100/60 text-emerald-800 border border-emerald-200 text-xs font-bold shadow-2xs transition cursor-pointer"
+                >
+                  {showPiiPreview ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                  <span>{showPiiPreview ? 'Hide Hash' : 'Preview Hash'}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    sound.playClick();
+                    if (onOpenPiiModal) onOpenPiiModal();
+                  }}
+                  className="flex items-center gap-1 px-2.5 py-1 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-xs shadow-emerald-600/20 transition cursor-pointer"
+                >
+                  <Lock className="w-3 h-3" />
+                  <span>Privacy Vault</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Entity Types Chip Row */}
+            <div className="flex flex-wrap items-center gap-1.5 mt-2">
+              <span className="text-[10px] font-bold text-emerald-800 uppercase tracking-wider">
+                Sanitizing:
+              </span>
+              {piiAnalysis.entities.map((ent, idx) => (
+                <span
+                  key={idx}
+                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-white/80 border border-emerald-200/90 text-slate-700 font-mono text-[11px]"
+                >
+                  <span className="font-bold text-emerald-700 font-sans">{ent.label || ent.kind}:</span>
+                  <span className="text-slate-500 line-through text-[10px]">{ent.rawValue}</span>
+                  <span className="text-slate-400">➔</span>
+                  <span className="font-bold text-purple-700 font-mono text-[10px]">{ent.token}</span>
+                </span>
+              ))}
+            </div>
+
+            {/* Expandable Preview */}
+            {showPiiPreview && (
+              <div className="mt-2.5 p-2.5 rounded-xl bg-slate-900 text-white font-mono text-xs border border-slate-700 space-y-1 animate-in fade-in duration-150">
+                <span className="text-[10px] text-cyan-400 font-bold uppercase tracking-wider block font-sans">
+                  Payload forwarded to Snowflake Cortex AI & FAISS Vector Store:
+                </span>
+                <p className="text-slate-200 leading-relaxed break-all select-all">
+                  {piiAnalysis.sanitizedText}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Example Queries */}
         <div className="mt-4">
-          <span className="text-xs font-bold text-slate-500 flex items-center gap-1.5 mb-2.5">
-            <Sparkles className={`w-3.5 h-3.5 ${mode === 'diagnostic' ? 'text-blue-500' : 'text-indigo-500'}`} />
-            Example queries
-          </span>
+          <div className="flex items-center justify-between gap-2 mb-2.5">
+            <span className="text-xs font-bold text-slate-500 flex items-center gap-1.5">
+              <Sparkles className={`w-3.5 h-3.5 ${mode === 'diagnostic' ? 'text-blue-500' : 'text-indigo-500'}`} />
+              Example queries
+            </span>
+            <button
+              type="button"
+              onClick={() => {
+                sound.playClick();
+                setQuery("Synthetic demo: customer_id=CUST-DEMO-7001 customer_name=Alex-Example (alex.example@example.test, +1-202-555-0147) could not sync because tax_id=TX-DEMO-88421 was already linked to account=ACCT-DEMO-4421.");
+              }}
+              className="text-[11px] font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/90 px-2.5 py-1 rounded-xl shadow-2xs transition-all duration-150 cursor-pointer flex items-center gap-1.5 hover:scale-[1.02]"
+              title="Test real-time PII pseudonymization with CRM synthetic customer record"
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+              <span>Try PII-Sanitized Query Demo</span>
+            </button>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
             {(mode === 'diagnostic' ? DIAGNOSTIC_EXAMPLES : KNOWLEDGE_EXAMPLES).map((prompt, idx) => (
               <button

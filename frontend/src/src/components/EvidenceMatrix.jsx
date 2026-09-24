@@ -5,11 +5,12 @@ import {
   CheckCircle2,
   Sparkles,
   Filter,
-  FileText
+  FileText,
+  ShieldCheck
 } from 'lucide-react';
 import { sound } from '../utils/audio';
 
-export default function EvidenceMatrix({ sources, highlightedSourceId }) {
+export default function EvidenceMatrix({ sources, highlightedSourceId, onOpenPiiModal }) {
   const [filter, setFilter] = useState('ALL');
 
   if (!sources || sources.length === 0) {
@@ -25,6 +26,32 @@ export default function EvidenceMatrix({ sources, highlightedSourceId }) {
       </div>
     );
   }
+
+  const renderSourceContent = (text) => {
+    if (!text) return null;
+    const parts = text.split(/(\[(?:EMAIL|PHONE|SSN|CARD|ID)_[a-f0-9]{12}\])/g);
+    return parts.map((chunk, i) => {
+      const isToken = /^\[(EMAIL|PHONE|SSN|CARD|ID)_[a-f0-9]{12}\]$/.test(chunk);
+      if (isToken) {
+        return (
+          <span
+            key={i}
+            onClick={(e) => {
+              e.stopPropagation();
+              sound.playClick();
+              if (onOpenPiiModal) onOpenPiiModal();
+            }}
+            className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-purple-100 hover:bg-purple-200 text-purple-800 border border-purple-300 font-mono text-xs font-bold mx-0.5 shadow-2xs cursor-pointer transition-all duration-150 hover:scale-105"
+            title="Cryptographic PII Hash (HMAC-SHA256) • Click to inspect in Privacy Vault"
+          >
+            <ShieldCheck className="w-3 h-3 text-purple-600 inline" />
+            <span>{chunk}</span>
+          </span>
+        );
+      }
+      return <span key={i}>{chunk}</span>;
+    });
+  };
 
   const filteredSources = sources.filter((s) => {
     if (filter === 'RUNBOOK') return s.text.toLowerCase().includes('runbook') || (s.type && s.type.toLowerCase().includes('runbook'));
@@ -48,6 +75,15 @@ export default function EvidenceMatrix({ sources, highlightedSourceId }) {
               <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200/70 shadow-2xs">
                 {sources.length} Docs
               </span>
+              <button
+                type="button"
+                onClick={() => onOpenPiiModal && onOpenPiiModal()}
+                className="flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-2xs transition-all cursor-pointer"
+                title="Zero-Knowledge Ingestion: All PII pseudonymized before indexing"
+              >
+                <ShieldCheck className="w-3 h-3 text-emerald-600" />
+                <span>Zero-Knowledge</span>
+              </button>
             </div>
           </div>
         </div>
@@ -115,7 +151,7 @@ export default function EvidenceMatrix({ sources, highlightedSourceId }) {
 
               {/* Source Text Snippet */}
               <div className="text-xs sm:text-sm text-slate-700 leading-relaxed bg-slate-50/90 rounded-xl p-3.5 border border-slate-200/60 font-sans">
-                {source.text}
+                {renderSourceContent(source.text)}
               </div>
             </div>
           );

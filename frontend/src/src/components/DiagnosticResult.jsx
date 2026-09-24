@@ -20,7 +20,8 @@ export default function DiagnosticResult({
   remediationCmd,
   remediationTitle,
   onExecuteRemediation,
-  onHighlightSource
+  onHighlightSource,
+  onOpenPiiModal
 }) {
   const [copiedCmd, setCopiedCmd] = useState(false);
   const [copiedReport, setCopiedReport] = useState(false);
@@ -139,7 +140,7 @@ export default function DiagnosticResult({
       }
 
       
-      const citeParts = sub.split(/(\[Source\s+\d+\])/g);
+      const citeParts = sub.split(/(\[Source\s+\d+\]|\[(?:EMAIL|PHONE|SSN|CARD|ID)_[a-f0-9]{12}\])/g);
       return citeParts.map((cPart, cIdx) => {
         const match = cPart.match(/\[Source\s+(\d+)\]/);
         if (match) {
@@ -158,6 +159,26 @@ export default function DiagnosticResult({
             >
               <span>[Source {sourceId}]</span>
             </button>
+          );
+        }
+
+        const piiMatch = cPart.match(/^\[(EMAIL|PHONE|SSN|CARD|ID)_([a-f0-9]{12})\]$/);
+        if (piiMatch) {
+          const [, kind, digest] = piiMatch;
+          return (
+            <span
+              key={`${keyPrefix}-pii-${sIdx}-${cIdx}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                sound.playClick();
+                if (onOpenPiiModal) onOpenPiiModal();
+              }}
+              className="inline-flex items-center gap-1 px-2 py-0.5 mx-1 rounded-md bg-purple-50 hover:bg-purple-100 text-purple-800 border border-purple-300 font-mono text-xs font-bold shadow-2xs cursor-pointer transition-all duration-150 hover:scale-105"
+              title={`Deterministic PII Hash (HMAC-SHA256)\nType: ${kind}\nDigest: ${digest}\nClick to inspect in Privacy Vault`}
+            >
+              <ShieldCheck className="w-3 h-3 text-purple-600 inline" />
+              <span>[{kind}_{digest}]</span>
+            </span>
           );
         }
 
@@ -201,13 +222,22 @@ export default function DiagnosticResult({
             {mode === 'diagnostic' ? <Zap className="w-5 h-5 fill-current" /> : <BookOpen className="w-5 h-5" />}
           </div>
           <div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <span className="text-base font-extrabold text-slate-900 font-sans tracking-tight">
                 {mode === 'diagnostic' ? 'AI Diagnostic Analysis' : 'ITIL Knowledge Runbook'}
               </span>
               <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200/80 shadow-2xs">
                 {source_count || sources?.length || 0} Citations
               </span>
+              <button
+                type="button"
+                onClick={() => onOpenPiiModal && onOpenPiiModal()}
+                className="flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300/80 shadow-2xs transition-all cursor-pointer"
+                title="Inspected via ResolveIQ PII Vault"
+              >
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                <span>PII Shielded</span>
+              </button>
             </div>
             <div className="text-xs text-slate-500 flex items-center gap-2 mt-1">
               <span className="flex items-center gap-1.5 font-medium">
