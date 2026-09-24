@@ -24,7 +24,7 @@
 
 <br />
 
-
+<img src="docs/screenshots/dashboard.png" alt="ResolveIQ Command Center Dashboard" width="900" />
 
 <br />
 <br />
