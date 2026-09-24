@@ -46,7 +46,7 @@ export async function performSearch({ query, top_k = 5, mode = "diagnostic", inc
   // Attempt live call to backend
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 8000);
+    const timeoutId = setTimeout(() => controller.abort(), 25000);
     const response = await fetch(`${API_BASE_URL}/search`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
