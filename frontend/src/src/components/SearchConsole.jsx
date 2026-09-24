@@ -68,14 +68,14 @@ export default function SearchConsole({
     <div className="w-full relative">
       <div className="glass-panel-elevated rounded-3xl p-5 sm:p-7 relative overflow-hidden transition-all duration-300">
 
-        
+
         {isLoading && (
           <div className="absolute top-0 left-0 right-0 h-0.75 overflow-hidden rounded-t-3xl pointer-events-none">
             <div className="w-1/2 h-full bg-linear-to-r from-transparent via-cyan-400 to-blue-600 blur-[1px] animate-laser-scan shadow-[0_0_12px_#38bdf8]"></div>
           </div>
         )}
 
-        
+
         <div className="flex flex-wrap items-center justify-between gap-3 mb-4.5">
 
           {/* Dual Mode Switcher */}
@@ -87,8 +87,8 @@ export default function SearchConsole({
                 setMode('diagnostic');
               }}
               className={`flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-bold tracking-wide transition-all duration-200 cursor-pointer ${mode === 'diagnostic'
-                  ? 'bg-linear-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/25 scale-[1.02]'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
+                ? 'bg-linear-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/25 scale-[1.02]'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
                 }`}
             >
               <Zap className="w-3.5 h-3.5 fill-current" />
@@ -102,8 +102,8 @@ export default function SearchConsole({
                 setMode('knowledge');
               }}
               className={`flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-bold tracking-wide transition-all duration-200 cursor-pointer ${mode === 'knowledge'
-                  ? 'bg-linear-to-r from-indigo-600 to-purple-600 text-white shadow-md shadow-indigo-500/25 scale-[1.02]'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
+                ? 'bg-linear-to-r from-indigo-600 to-purple-600 text-white shadow-md shadow-indigo-500/25 scale-[1.02]'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
                 }`}
             >
               <BookOpen className="w-3.5 h-3.5" />
@@ -120,8 +120,8 @@ export default function SearchConsole({
                 setShowConfig(!showConfig);
               }}
               className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer ${showConfig
-                  ? 'bg-blue-50/90 border-blue-300 text-blue-700 shadow-xs'
-                  : 'bg-white/80 hover:bg-slate-50 border-slate-200/90 text-slate-700 hover:text-slate-900 shadow-xs'
+                ? 'bg-blue-50/90 border-blue-300 text-blue-700 shadow-xs'
+                : 'bg-white/80 hover:bg-slate-50 border-slate-200/90 text-slate-700 hover:text-slate-900 shadow-xs'
                 }`}
             >
               <Sliders className="w-3.5 h-3.5 text-blue-600" />
@@ -215,11 +215,10 @@ export default function SearchConsole({
                   sound.playClick();
                   setQuery(prompt);
                 }}
-                className={`px-4 py-3 rounded-xl bg-white/90 border border-slate-200/80 text-slate-600 text-sm font-medium text-center transition-all duration-150 cursor-pointer shadow-2xs hover:shadow-xs hover:-translate-y-0.5 ${
-                  mode === 'diagnostic'
+                className={`px-4 py-3 rounded-xl bg-white/90 border border-slate-200/80 text-slate-600 text-sm font-medium text-center transition-all duration-150 cursor-pointer shadow-2xs hover:shadow-xs hover:-translate-y-0.5 ${mode === 'diagnostic'
                     ? 'hover:bg-blue-50 hover:text-blue-700 hover:border-blue-300'
                     : 'hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-300'
-                }`}
+                  }`}
               >
                 {prompt}
               </button>
@@ -254,10 +253,10 @@ export default function SearchConsole({
                   <div
                     key={step.id}
                     className={`p-2.5 rounded-xl border text-xs font-semibold transition-all duration-200 ${isDone
-                        ? 'bg-emerald-50/90 border-emerald-300/80 text-emerald-800 shadow-xs'
-                        : isCurrent
-                          ? 'bg-blue-50 border-blue-400 text-blue-800 shadow-md shadow-blue-500/15 animate-pulse'
-                          : 'bg-slate-50 border-slate-200/80 text-slate-400'
+                      ? 'bg-emerald-50/90 border-emerald-300/80 text-emerald-800 shadow-xs'
+                      : isCurrent
+                        ? 'bg-blue-50 border-blue-400 text-blue-800 shadow-md shadow-blue-500/15 animate-pulse'
+                        : 'bg-slate-50 border-slate-200/80 text-slate-400'
                       }`}
                   >
                     <div className="flex items-center gap-2">
