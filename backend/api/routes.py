@@ -80,3 +80,31 @@ async def search(payload: SearchRequest, request: Request) -> SearchResponse:
 			status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
 			detail=f"Search service error: {exc}",
 		) from exc
+
+
+class PIISanitizeRequest(BaseModel):
+	text: str = Field(min_length=1, max_length=10000)
+
+
+class PIISanitizeResponse(BaseModel):
+	raw_text: str
+	sanitized_text: str
+	has_pii: bool
+	entity_count: int
+	entities: list[dict[str, Any]]
+
+
+@router.post("/pii/sanitize", response_model=PIISanitizeResponse)
+async def pii_sanitize(payload: PIISanitizeRequest) -> PIISanitizeResponse:
+	try:
+		from src.pii import analyze_pii
+
+		result = analyze_pii(payload.text)
+		return PIISanitizeResponse.model_validate(result)
+	except Exception as exc:
+		logger.exception("PII sanitization request failed: %s", exc)
+		raise HTTPException(
+			status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+			detail=f"PII sanitization error: {exc}",
+		) from exc
+

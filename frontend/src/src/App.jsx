@@ -5,6 +5,7 @@ import SearchConsole from './components/SearchConsole';
 import DiagnosticResult from './components/DiagnosticResult';
 import EvidenceMatrix from './components/EvidenceMatrix';
 import RemediationTerminalModal from './components/RemediationTerminalModal';
+import PIIShieldModal from './components/PIIShieldModal';
 import { performSearch } from './services/api';
 import { SAMPLE_INCIDENTS, DEMO_RESPONSES } from './data/sampleData';
 import { sound } from './utils/audio';
@@ -21,9 +22,11 @@ export default function App() {
   const [highlightedSourceId, setHighlightedSourceId] = useState(null);
 
   const [terminalOpen, setTerminalOpen] = useState(false);
+  const [piiModalOpen, setPiiModalOpen] = useState(false);
 
-  const handleSearch = async (overrideIncident = null, overrideMode = null) => {
-    if (!query.trim()) return;
+  const handleSearch = async (overrideIncident = null, overrideMode = null, overrideQuery = null) => {
+    const targetQuery = overrideQuery !== null ? overrideQuery : query;
+    if (!targetQuery.trim()) return;
     setIsLoading(true);
     setDiagnosticStep(1);
 
@@ -36,7 +39,7 @@ export default function App() {
 
     try {
       const response = await performSearch({
-        query,
+        query: targetQuery,
         top_k: topK,
         mode: targetMode,
         incidentId: targetIncident ? targetIncident.id : null,
@@ -127,7 +130,7 @@ export default function App() {
       <div className="fixed -bottom-40 left-1/3 w-125 h-125 bg-linear-to-tr from-sky-400/20 to-blue-500/15 rounded-full blur-[110px] pointer-events-none animate-aurora-3 z-0"></div>
 
       {/* Top Navbar */}
-      <Navbar />
+      <Navbar onOpenPiiModal={() => setPiiModalOpen(true)} />
 
       {/* Main Command Dashboard */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 relative z-10">
@@ -152,6 +155,7 @@ export default function App() {
             onSearch={() => handleSearch()}
             isLoading={isLoading}
             diagnosticStep={diagnosticStep}
+            onOpenPiiModal={() => setPiiModalOpen(true)}
           />
         </section>
 
@@ -166,6 +170,7 @@ export default function App() {
                 remediationTitle={activeIncident?.remediationScriptTitle}
                 onExecuteRemediation={() => setTerminalOpen(true)}
                 onHighlightSource={handleHighlightSource}
+                onOpenPiiModal={() => setPiiModalOpen(true)}
               />
             </div>
 
@@ -173,6 +178,7 @@ export default function App() {
               <EvidenceMatrix
                 sources={searchResult?.sources || []}
                 highlightedSourceId={highlightedSourceId}
+                onOpenPiiModal={() => setPiiModalOpen(true)}
               />
             </div>
 
@@ -203,6 +209,16 @@ export default function App() {
         command={activeIncident?.remediationCmd}
         title={activeIncident?.remediationScriptTitle}
         incidentId={activeIncident?.id}
+      />
+
+      {/* PII Cryptographic Privacy Vault & Sanitization Modal */}
+      <PIIShieldModal
+        isOpen={piiModalOpen}
+        onClose={() => setPiiModalOpen(false)}
+        onApplyToSearch={(sanitizedQuery) => {
+          setQuery(sanitizedQuery);
+          handleSearch(null, null, sanitizedQuery);
+        }}
       />
 
     </div>

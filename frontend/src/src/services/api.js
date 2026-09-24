@@ -1,6 +1,7 @@
 import { DEMO_RESPONSES, generateGenericResolution } from "../data/sampleData";
+import { analyzePII } from "../utils/piiHasher";
 
-const API_BASE_URL = "http://localhost:8000/api/v1";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api/v1";
 
 export async function checkBackendHealth() {
   try {
@@ -86,3 +87,28 @@ export async function performSearch({ query, top_k = 5, mode = "diagnostic", inc
     isSandbox: true,
   };
 }
+
+export async function fetchPIISanitize(text) {
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 3000);
+    const response = await fetch(`${API_BASE_URL}/pii/sanitize`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text }),
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
+
+    if (response.ok) {
+      return await response.json();
+    }
+  } catch (err) {
+    console.debug("[ResolveIQ] Live PII endpoint unavailable, using browser HMAC-SHA256 engine:", err);
+  }
+
+  // Fallback to local cryptographic engine
+  return analyzePII(text);
+}
+
+

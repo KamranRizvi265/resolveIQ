@@ -42,3 +42,38 @@ def sanitize_text(text: str) -> str:
         return f"{match.group('label')}{_token('ID', match.group('value'))}"
 
     return _LABELED_ID_RE.sub(replace_labeled_id, sanitized)
+
+
+def analyze_pii(text: str) -> dict[str, Any]:
+    """Analyze and extract detected PII entities alongside sanitized text."""
+    entities: list[dict[str, Any]] = []
+
+    for match in _EMAIL_RE.finditer(text):
+        val = match.group(0)
+        entities.append({"kind": "EMAIL", "label": "Email Address", "raw_value": val, "token": _token("EMAIL", val)})
+
+    for match in _PHONE_RE.finditer(text):
+        val = match.group(0)
+        entities.append({"kind": "PHONE", "label": "Phone Number", "raw_value": val, "token": _token("PHONE", val)})
+
+    for match in _SSN_RE.finditer(text):
+        val = match.group(0)
+        entities.append({"kind": "SSN", "label": "Social Security Number", "raw_value": val, "token": _token("SSN", val)})
+
+    for match in _CARD_RE.finditer(text):
+        val = match.group(0)
+        entities.append({"kind": "CARD", "label": "Payment Card", "raw_value": val, "token": _token("CARD", val)})
+
+    for match in _LABELED_ID_RE.finditer(text):
+        lbl = match.group("label").strip()
+        val = match.group("value")
+        entities.append({"kind": "ID", "label": lbl, "raw_value": val, "token": _token("ID", val)})
+
+    sanitized = sanitize_text(text)
+    return {
+        "raw_text": text,
+        "sanitized_text": sanitized,
+        "has_pii": len(entities) > 0,
+        "entity_count": len(entities),
+        "entities": entities,
+    }
