@@ -12,6 +12,18 @@ import {
 } from 'lucide-react';
 import { sound } from '../utils/audio';
 
+const DIAGNOSTIC_EXAMPLES = [
+  "Find similar incidents for error code OMS-4402",
+  "What patterns exist for FI-GL-007 GL reconciliation breaks?",
+  "Root cause analysis for ServiceNow Jira bridge sync failures",
+];
+
+const KNOWLEDGE_EXAMPLES = [
+  "How do I fix ERP payment interface timeout error PI-1234?",
+  "What is the runbook for OMS order stuck in Pending Payment?",
+  "Steps to resolve CRM customer master sync failure CRM-SYNC-901",
+];
+
 export default function SearchConsole({
   query,
   setQuery,
@@ -188,30 +200,31 @@ export default function SearchConsole({
           </div>
         </form>
 
-        {/* Quick Suggestion Chips */}
-        <div className="mt-3.5 flex items-center gap-2 overflow-x-auto pb-1 text-xs">
-          <span className="text-xs font-bold text-slate-400 whitespace-nowrap flex items-center gap-1">
-            <Sparkles className="w-3 h-3 text-blue-500" />
-            Quick Scenarios:
+        {/* Example Queries */}
+        <div className="mt-4">
+          <span className="text-xs font-bold text-slate-500 flex items-center gap-1.5 mb-2.5">
+            <Sparkles className={`w-3.5 h-3.5 ${mode === 'diagnostic' ? 'text-blue-500' : 'text-indigo-500'}`} />
+            Example queries
           </span>
-          {[
-            "Payment gateway handshake timeout PI-1234",
-            "ERP GL reconciliation break unposted journal",
-            "CRM customer sync failure Kafka lag",
-            "OMS order stuck pending payment settlement",
-          ].map((prompt, idx) => (
-            <button
-              key={idx}
-              type="button"
-              onClick={() => {
-                sound.playClick();
-                setQuery(prompt);
-              }}
-              className="px-3 py-1 rounded-xl bg-white/90 hover:bg-blue-50 hover:text-blue-700 border border-slate-200/80 hover:border-blue-300 text-slate-600 text-xs font-medium whitespace-nowrap transition-all duration-150 cursor-pointer shadow-2xs hover:shadow-xs hover:-translate-y-0.5"
-            >
-              {prompt}
-            </button>
-          ))}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            {(mode === 'diagnostic' ? DIAGNOSTIC_EXAMPLES : KNOWLEDGE_EXAMPLES).map((prompt, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => {
+                  sound.playClick();
+                  setQuery(prompt);
+                }}
+                className={`px-4 py-3 rounded-xl bg-white/90 border border-slate-200/80 text-slate-600 text-sm font-medium text-center transition-all duration-150 cursor-pointer shadow-2xs hover:shadow-xs hover:-translate-y-0.5 ${
+                  mode === 'diagnostic'
+                    ? 'hover:bg-blue-50 hover:text-blue-700 hover:border-blue-300'
+                    : 'hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-300'
+                }`}
+              >
+                {prompt}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Pipeline Progress (Displays when loading) */}
