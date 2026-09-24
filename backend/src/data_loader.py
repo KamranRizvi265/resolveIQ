@@ -1,9 +1,17 @@
+import json
 from pathlib import Path
 from typing import List, Any
+from langchain_core.documents import Document
 from langchain_community.document_loaders import PyPDFLoader, TextLoader, CSVLoader
 from langchain_community.document_loaders import Docx2txtLoader
 from langchain_community.document_loaders import UnstructuredExcelLoader
-from langchain_community.document_loaders import JSONLoader
+from .pii import sanitize_text
+
+
+def _sanitize_documents(documents: List[Any]) -> List[Any]:
+    for document in documents:
+        document.page_content = sanitize_text(document.page_content)
+    return documents
 
 def load_documents(data_dir: str) -> List[Any]:
     """
@@ -87,11 +95,17 @@ def load_documents(data_dir: str) -> List[Any]:
     for json_file in json_files:
         print(f"[DEBUG] Loading JSON: {json_file}")
         try:
-            loader = JSONLoader(str(json_file),jq_schema=".")
-            loaded = loader.load()
+            with json_file.open("r", encoding="utf-8", errors="replace") as file:
+                payload = json.load(file)
+            loaded = [
+                Document(
+                    page_content=json.dumps(payload, ensure_ascii=False),
+                    metadata={"source": str(json_file)},
+                )
+            ]
             print(f"[DEBUG] Loaded {len(loaded)} JSON docs from {json_file}")
             documents.extend(loaded)
         except Exception as e:
             print(f"[ERROR] Failed to load JSON {json_file}: {e}")
 
-    return documents
+    return _sanitize_documents(documents)
