@@ -6,7 +6,7 @@ import { sound } from '../utils/audio';
 export default function IncidentStream({ onSelectIncident, activeIncidentId }) {
   return (
     <div className="w-full">
-      {/* Stream Header with Live Radar Sweep */}
+      
       <div className="flex items-center justify-between mb-3 px-1">
         <div className="flex items-center gap-2.5">
           <div className="relative flex items-center justify-center w-7 h-7 rounded-xl bg-blue-100 text-blue-700 shadow-xs">

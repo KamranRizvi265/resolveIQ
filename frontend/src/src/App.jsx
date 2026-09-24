@@ -1,18 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Navbar from './components/Navbar';
 import IncidentStream from './components/IncidentStream';
 import SearchConsole from './components/SearchConsole';
 import DiagnosticResult from './components/DiagnosticResult';
 import EvidenceMatrix from './components/EvidenceMatrix';
 import RemediationTerminalModal from './components/RemediationTerminalModal';
-import PitchModal from './components/PitchModal';
-import { checkBackendHealth, performSearch } from './services/api';
+import { performSearch } from './services/api';
 import { SAMPLE_INCIDENTS, DEMO_RESPONSES } from './data/sampleData';
 import { sound } from './utils/audio';
 
 export default function App() {
-  const [backendStatus, setBackendStatus] = useState({ online: false, searchService: 'offline' });
-  const [sandboxMode, setSandboxMode] = useState(false);
   const [query, setQuery] = useState("Payment gateway handshake timeout PI-1234 connection reset by peer");
   const [mode, setMode] = useState('diagnostic');
   const [topK, setTopK] = useState(5);
@@ -24,24 +21,6 @@ export default function App() {
   const [highlightedSourceId, setHighlightedSourceId] = useState(null);
 
   const [terminalOpen, setTerminalOpen] = useState(false);
-  const [pitchOpen, setPitchOpen] = useState(false);
-
-  useEffect(() => {
-    let isMounted = true;
-    const pollHealth = async () => {
-      const status = await checkBackendHealth();
-      if (isMounted) {
-        setBackendStatus(status);
-      }
-    };
-
-    pollHealth();
-    const interval = setInterval(pollHealth, 10000);
-    return () => {
-      isMounted = false;
-      clearInterval(interval);
-    };
-  }, []);
 
   const handleSearch = async (overrideIncident = null, overrideMode = null) => {
     setIsLoading(true);
@@ -60,7 +39,6 @@ export default function App() {
         top_k: topK,
         mode: targetMode,
         incidentId: targetIncident ? targetIncident.id : null,
-        forceSandbox: sandboxMode,
       });
 
       clearTimeout(timer1);
@@ -147,12 +125,7 @@ export default function App() {
       <div className="fixed -bottom-40 left-1/3 w-125 h-125 bg-linear-to-tr from-sky-400/20 to-blue-500/15 rounded-full blur-[110px] pointer-events-none animate-aurora-3 z-0"></div>
 
       {/* Top Navbar */}
-      <Navbar
-        backendStatus={backendStatus}
-        sandboxMode={sandboxMode}
-        onToggleSandbox={() => setSandboxMode(!sandboxMode)}
-        onOpenPitch={() => setPitchOpen(true)}
-      />
+      <Navbar />
 
       {/* Main Command Dashboard */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 relative z-10">
@@ -226,12 +199,6 @@ export default function App() {
         command={activeIncident?.remediationCmd}
         title={activeIncident?.remediationScriptTitle}
         incidentId={activeIncident?.id}
-      />
-
-      {/* Pitch Guide Modal */}
-      <PitchModal
-        isOpen={pitchOpen}
-        onClose={() => setPitchOpen(false)}
       />
 
     </div>

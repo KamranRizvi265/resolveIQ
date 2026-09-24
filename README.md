@@ -227,8 +227,7 @@ resolveiq/
 │           │   ├── SearchConsole.jsx    # Search input, top-k slider, mode selector
 │           │   ├── DiagnosticResult.jsx # Markdown response renderer & citations
 │           │   ├── EvidenceMatrix.jsx   # Vector search source matches
-│           │   ├── RemediationTerminalModal.jsx # Simulated interactive terminal
-│           │   └── PitchModal.jsx       # Interactive presentation guide
+│           │   └── RemediationTerminalModal.jsx # Simulated interactive terminal
 │           ├── data/
 │           │   └── sampleData.js        # Curated incidents & offline fallback data
 │           ├── services/

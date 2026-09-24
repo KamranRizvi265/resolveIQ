@@ -56,14 +56,14 @@ export default function SearchConsole({
     <div className="w-full relative">
       <div className="glass-panel-elevated rounded-3xl p-5 sm:p-7 relative overflow-hidden transition-all duration-300">
 
-        {/* Electric Laser Scanning Beam (Active during loading) */}
+        
         {isLoading && (
           <div className="absolute top-0 left-0 right-0 h-0.75 overflow-hidden rounded-t-3xl pointer-events-none">
             <div className="w-1/2 h-full bg-linear-to-r from-transparent via-cyan-400 to-blue-600 blur-[1px] animate-laser-scan shadow-[0_0_12px_#38bdf8]"></div>
           </div>
         )}
 
-        {/* Top Controls: Mode Switcher & Sliders Toggle */}
+        
         <div className="flex flex-wrap items-center justify-between gap-3 mb-4.5">
 
           {/* Dual Mode Switcher */}

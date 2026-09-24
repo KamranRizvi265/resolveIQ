@@ -123,11 +123,11 @@ export default function DiagnosticResult({
     });
   };
 
-  // Parse inner code and citation tokens
+  
   const renderInlineTokens = (text, keyPrefix = '') => {
     if (!text) return null;
 
-    // Code blocks inside text `...`
+    
     const codeParts = text.split(/(`[^`]+`)/g);
     return codeParts.map((sub, sIdx) => {
       if (sub.startsWith('`') && sub.endsWith('`') && sub.length >= 2) {
@@ -138,7 +138,7 @@ export default function DiagnosticResult({
         );
       }
 
-      // Convert [Source N] into cheerful clickable badges
+      
       const citeParts = sub.split(/(\[Source\s+\d+\])/g);
       return citeParts.map((cPart, cIdx) => {
         const match = cPart.match(/\[Source\s+(\d+)\]/);
@@ -168,11 +168,11 @@ export default function DiagnosticResult({
     });
   };
 
-  // Convert **bold** and [Source N] citations into rich styled elements
+  
   const renderInlineCitations = (content) => {
     if (!content) return null;
 
-    // Parse bold tags **...** first so nested citations or code blocks work seamlessly
+    
     const boldParts = content.split(/(\*\*[^*]+?\*\*)/g);
     return boldParts.map((bSub, bIdx) => {
       if (bSub.startsWith('**') && bSub.endsWith('**') && bSub.length >= 4) {
@@ -235,7 +235,7 @@ export default function DiagnosticResult({
         {renderFormattedAnswer(answer)}
       </div>
 
-      {/* Automated Remediation Script Card (Cyberpunk Terminal) */}
+      
       {remediationCmd && (
         <div className="mt-7 pt-5 border-t border-slate-100">
           <div className="flex items-center justify-between mb-2.5">
@@ -252,7 +252,7 @@ export default function DiagnosticResult({
           </div>
 
           <div className="relative group rounded-2xl bg-slate-950 border border-slate-800/90 p-4 shadow-lg shadow-slate-950/20 overflow-hidden">
-            {/* Terminal Window Header with macOS Dots */}
+            
             <div className="flex items-center justify-between pb-2.5 mb-2.5 border-b border-slate-800/80">
               <div className="flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80"></span>
