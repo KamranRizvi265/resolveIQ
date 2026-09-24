@@ -9,6 +9,7 @@ from .config import (
     get_snowflake_pat,
 )
 from .vectorstore import FaissVectorStore
+from .pii import sanitize_text
 
 KNOWLEDGE_PROMPT = """You are an ITIL-aligned L2 support assistant for a finance enterprise.
 Answer ONLY from the provided context. If the context is insufficient, say so and recommend escalation.
@@ -124,6 +125,7 @@ class RAGSearch:
         top_k: int = 5,
         mode: str = "knowledge",
     ) -> dict[str, Any]:
+        query = sanitize_text(query)
         sources = self._retrieve_sources(query, top_k)
         if not sources:
             return {
