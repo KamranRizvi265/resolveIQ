@@ -72,9 +72,9 @@ Enterprise financial operations, trading desks, and ERP ecosystems operate under
 │     Output                   AI LLM Engine               Assembly           │
 │  ┌─────────────────┐       ┌─────────────────┐       ┌──────────────────┐   │
 │  │ Root Cause RCA  │       │ Cortex REST API │       │ [Source 1]       │   │
-│  │ SOP Action Steps│◀──────│ openai-gpt-oss  │◀──────│ [Source 2]       │   │
-│  │ Remediation CMD │       │  -120b / Llama  │  RAG  │ [Source N]       │   │
-│  │ Audit Citations │       │ Mistral Large 2 │       │ + Distance & %   │   │
+│  │ SOP Action Steps│◀──────│  llama3.1-70b   │◀──────│ [Source 2]       │   │
+│  │ Remediation CMD │       │  llama3.1-8b    │  RAG  │ [Source N]       │   │
+│  │ Audit Citations │       │ Mistral / Llama │       │ + Distance & %   │   │
 │  └─────────────────┘       └─────────────────┘       └──────────────────┘   │
 │                                                                             │
 │  ┌───────────────────────────────────────────────────────────────────────┐  │
@@ -98,7 +98,7 @@ ResolveIQ integrates with **Snowflake Cortex AI** as its enterprise intelligence
 
 **🤖 Cortex LLM Inference**
 
-Snowflake Cortex models (e.g. `openai-gpt-oss-120b`, `mistral-large2`, `llama3.3-70b`) synthesize natural-language incident queries against enterprise context to generate ranked root causes, error signatures and escalation criteria.
+Snowflake Cortex models (e.g. `llama3.1-70b`, `llama3.1-8b`) synthesize natural-language incident queries against enterprise context to generate ranked root causes, error signatures and escalation criteria.
 
 </td>
 <td width="50%">
@@ -285,8 +285,8 @@ SNOWFLAKE_ACCOUNT_IDENTIFIER="your-account-identifier"
 # Optional: Override base URL if using a custom Snowflake PrivateLink/endpoint
 # SNOWFLAKE_CORTEX_BASE_URL="https://your-account-identifier.snowflakecomputing.com/api/v2/cortex/v1"
 
-# LLM model hosted on Snowflake Cortex
-LLM_MODEL_NAME="openai-gpt-oss-120b"
+# LLM model hosted on Snowflake Cortex (e.g., llama3.1-70b, llama3.1-8b)
+LLM_MODEL_NAME="llama3.1-70b"
 
 # App Security & Database
 SECRET_KEY="your-secret-key-here"
@@ -423,7 +423,7 @@ Content-Type: application/json
 
 | Component | Technology | Description |
 |---|---|---|
-| **AI LLM Inference** | ❄️ **Snowflake Cortex AI** | Large Language Models (`openai-gpt-oss-120b`, `mistral-large2`, `llama3.3-70b`) via Cortex REST API |
+| **AI LLM Inference** | ❄️ **Snowflake Cortex AI** | Large Language Models (`llama3.1-70b`, `llama3.1-8b`) via Cortex REST API |
 | **Embeddings** | **Sentence Transformers** | `all-MiniLM-L6-v2` generating 384-dimensional dense semantic vectors |
 | **Vector Index** | **FAISS (IndexFlatL2)** | Millisecond exact Euclidean distance vector retrieval |
 | **Orchestration** | **LangChain** | Document chunking (`RecursiveCharacterTextSplitter`), prompt chaining, and Cortex OpenAI wrapper |

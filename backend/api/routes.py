@@ -1,8 +1,11 @@
 import asyncio
+import logging
 from typing import Literal
 
 from fastapi import APIRouter, HTTPException, Request, status
 from pydantic import BaseModel, Field
+
+logger = logging.getLogger(__name__)
 
 
 class SearchRequest(BaseModel):
@@ -72,7 +75,8 @@ async def search(payload: SearchRequest, request: Request) -> SearchResponse:
 		)
 		return SearchResponse.model_validate(result)
 	except Exception as exc:
+		logger.exception("Search service request failed: %s", exc)
 		raise HTTPException(
 			status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-			detail="Search service is unavailable. Check the backend configuration and try again.",
+			detail=f"Search service error: {exc}",
 		) from exc
