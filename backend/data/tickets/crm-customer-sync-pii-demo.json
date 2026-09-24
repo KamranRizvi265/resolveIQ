@@ -1,0 +1,8 @@
+{
+  "ticket_id": "FINOPS-PII-DEMO-7001",
+  "source": "jira",
+  "system": "CRM",
+  "error_code": "CRM-SYNC-901",
+  "description": "Synthetic demo record: customer_id=CUST-DEMO-7001 customer_name=Alex-Example (alex.example@example.test, +1-202-555-0147) could not sync because tax_id=TX-DEMO-88421 was already linked to account=ACCT-DEMO-4421.",
+  "resolution": "Validated the synthetic customer record, corrected the duplicate CRM-to-ERP mapping, and replayed the failed sync. No real customer, tax, payment, or contact data is present in this fixture."
+}
