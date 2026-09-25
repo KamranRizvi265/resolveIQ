@@ -315,7 +315,7 @@ export default function PIIShieldModal({
                     <div className="flex items-center gap-2 text-emerald-900">
                       <ShieldCheck className="w-4 h-4 text-emerald-600" />
                       <span className="text-xs font-bold uppercase tracking-wider">
-                        2. Snowflake Cortex & FAISS Ingestion Stream
+                        2. Groq AI & FAISS Ingestion Stream
                       </span>
                     </div>
                     <button
@@ -412,7 +412,7 @@ export default function PIIShieldModal({
                     </h4>
                   </div>
                   <p className="text-xs text-slate-600 leading-relaxed">
-                    Under GDPR Art. 4(5) & Art. 32, personal data is rendered non-attributable to a specific data subject without the use of additional information. In ResolveIQ, the secret HMAC key is stored in AWS/GCP Key Management Service (KMS), meaning third-party model providers (e.g. Snowflake Cortex LLM) cannot reverse the identifier.
+                    Under GDPR Art. 4(5) & Art. 32, personal data is rendered non-attributable to a specific data subject without the use of additional information. In ResolveIQ, the secret HMAC key is stored in AWS/GCP Key Management Service (KMS), meaning third-party model providers (e.g. Groq) cannot reverse the identifier.
                   </p>
                 </div>
 
@@ -469,7 +469,7 @@ export default function PIIShieldModal({
                   </div>
                   <ArrowRight className="w-4 h-4 text-blue-600 shrink-0 hidden sm:block" />
                   <div className="p-2.5 rounded-xl bg-blue-50 border border-blue-300 text-blue-800 shadow-2xs text-center w-full sm:w-1/3">
-                    Snowflake Cortex LLM + FAISS Store
+                    Groq LLM + FAISS Store
                   </div>
                 </div>
               </div>

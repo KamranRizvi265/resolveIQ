@@ -4,9 +4,9 @@
 
 ### Autonomous AI Copilot for Enterprise Incident Resolution
 
-**Snowflake Cortex AI · ITIL-Aligned · RAG-Powered · Zero-Hallucination · Finance-Grade**
+**Groq AI · ITIL-Aligned · RAG-Powered · Zero-Hallucination · Finance-Grade**
 
-[![Snowflake](https://img.shields.io/badge/Snowflake-Cortex%20AI-29B5E8?style=for-the-badge&logo=snowflake&logoColor=white)](https://www.snowflake.com/en/data-cloud/cortex/)
+[![Groq](https://img.shields.io/badge/Groq-AI-F55036?style=for-the-badge&logo=groq&logoColor=white)](https://groq.com/)
 [![Python](https://img.shields.io/badge/Python-3.13+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.139+-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
@@ -29,7 +29,7 @@
 <br />
 <br />
 
-[🚀 Quick Start](#-quick-start) · [🏗️ Architecture](#%EF%B8%8F-architecture) · [✨ Features](#-features) · [❄️ Snowflake Cortex AI](#%EF%B8%8F-powered-by-snowflake-cortex-ai) · [🎯 Demo Scenarios](#-demo-scenarios) · [📖 API Reference](#-api-reference) · [🛠️ Tech Stack](#%EF%B8%8F-tech-stack) · [🏆 Why ResolveIQ Wins](#-why-resolveiq-wins)
+[🚀 Quick Start](#-quick-start) · [🏗️ Architecture](#%EF%B8%8F-architecture) · [✨ Features](#-features) · [⚡ Groq AI](#%E2%9A%A1-powered-by-groq-ai) · [🎯 Demo Scenarios](#-demo-scenarios) · [📖 API Reference](#-api-reference) · [🛠️ Tech Stack](#%EF%B8%8F-tech-stack) · [🏆 Why ResolveIQ Wins](#-why-resolveiq-wins)
 
 </div>
 
@@ -51,12 +51,12 @@ Enterprise financial operations, trading desks, and ERP ecosystems operate under
 
 ## 💡 The Solution
 
-**ResolveIQ** is an autonomous incident copilot powered by **Snowflake Cortex AI** and **FAISS semantic retrieval**. It ingests multi-source runbooks and historical incident tickets, extracts institutional knowledge and executes ITIL-constrained diagnostic and knowledge-synthesis workflows grounded strictly in source evidence.
+**ResolveIQ** is an autonomous incident copilot powered by **Groq AI** and **FAISS semantic retrieval**. It ingests multi-source runbooks and historical incident tickets, extracts institutional knowledge and executes ITIL-constrained diagnostic and knowledge-synthesis workflows grounded strictly in source evidence.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                    ResolveIQ System Architecture                            │
-│                    Powered by Snowflake Cortex AI                           │
+│                    Powered by Groq AI                                       │
 │                                                                             │
 │  📄 Enterprise Data        🧠 Sentence Transformer    🔍 FAISS Vector Store │
 │     Ingestion                 Embeddings                 IndexFlatL2        │
@@ -68,10 +68,10 @@ Enterprise financial operations, trading desks, and ERP ecosystems operate under
 │  └─────────────────┘       └─────────────────┘       └────────┬─────────┘   │
 │                                                               │ retrieve    │
 │                                                               ▼             │
-│  📊 ITIL Structured       ❄️ Snowflake Cortex         📋 Context            │
+│  📊 ITIL Structured       ⚡ Groq AI LLM              📋 Context            │
 │     Output                   AI LLM Engine               Assembly           │
 │  ┌─────────────────┐       ┌─────────────────┐       ┌──────────────────┐   │
-│  │ Root Cause RCA  │       │ Cortex REST API │       │ [Source 1]       │   │
+│  │ Root Cause RCA  │       │ Groq API        │       │ [Source 1]       │   │
 │  │ SOP Action Steps│◀──────│  llama3.1-70b   │◀──────│ [Source 2]       │   │
 │  │ Remediation CMD │       │  llama3.1-8b    │  RAG  │ [Source N]       │   │
 │  │ Audit Citations │       │ Mistral / Llama │       │ + Distance & %   │   │
@@ -88,17 +88,17 @@ Enterprise financial operations, trading desks, and ERP ecosystems operate under
 
 ---
 
-## ❄️ Powered by Snowflake Cortex AI
+## ⚡ Powered by Groq AI
 
-ResolveIQ integrates with **Snowflake Cortex AI** as its enterprise intelligence backbone through Snowflake's OpenAI-compatible REST API (`/api/v2/cortex/v1`):
+ResolveIQ integrates with **Groq** as its enterprise intelligence backbone through the Groq API:
 
 <table>
 <tr>
 <td width="50%">
 
-**🤖 Cortex LLM Inference**
+**🤖 Groq LLM Inference**
 
-Snowflake Cortex models (e.g. `llama3.1-70b`, `llama3.1-8b`) synthesize natural-language incident queries against enterprise context to generate ranked root causes, error signatures and escalation criteria.
+Groq-hosted models (by default `llama-3.3-70b-versatile`) synthesize natural-language incident queries against enterprise context to generate ranked root causes, error signatures and escalation criteria.
 
 </td>
 <td width="50%">
@@ -121,7 +121,7 @@ Strict ITIL system prompts enforce zero-hallucination guardrails: the model answ
 
 **⚡ Enterprise Hybrid Execution**
 
-The FastAPI backend connects directly to Snowflake Cortex AI using Personal Access Tokens (PAT), with a built-in enterprise sandbox fallback for zero-downtime offline demonstrations.
+The FastAPI backend connects directly to Groq using an API key, with a built-in enterprise sandbox fallback for zero-downtime offline demonstrations.
 
 </td>
 </tr>
@@ -170,7 +170,7 @@ _Target: L1 Helpdesk, Operations & NOC Engineers_
 - **AI Search Console**: Natural-language query bar with `Ctrl+K` keyboard shortcut, quick scenario chips, search mode toggle and vector depth slider (top-k 1 to 10).
 - **Interactive Evidence Matrix**: Source document cards displaying document type (Runbook vs Historical Ticket), relevance score percentage, vector distance and preview text.
 - **Remediation Terminal**: Simulated shell terminal with pre-populated runbook remediation commands, 1-click clipboard copy and interactive execution simulation.
-- **Live / Sandbox Toggle**: Switch between live Snowflake Cortex AI backend calls and an embedded high-fidelity offline sandbox for guaranteed demo reliability.
+- **Live / Sandbox Toggle**: Switch between live Groq backend calls and an embedded high-fidelity offline sandbox for guaranteed demo reliability.
 - **Audio Feedback Suite**: Synthesized Web Audio API sound effects for clicks, query execution, terminal runs and status alerts.
 
 ---
@@ -184,11 +184,11 @@ resolveiq/
 │   ├── api/
 │   │   └── routes.py                    # /api/v1/health & /api/v1/search endpoints
 │   ├── src/
-│   │   ├── config.py                    # Snowflake PAT & Cortex endpoint config
+│   │   ├── config.py                    # Groq API key & model configuration
 │   │   ├── data_loader.py               # Ingestion (PDF, JSON, XML, CSV, DOCX, TXT)
 │   │   ├── embedding.py                 # Sentence Transformers (all-MiniLM-L6-v2)
 │   │   ├── vectorstore.py               # FAISS IndexFlatL2 persist & search
-│   │   └── search.py                    # RAGSearch: context assembly + Cortex LLM
+│   │   └── search.py                    # RAGSearch: context assembly + Groq LLM
 │   ├── data/
 │   │   ├── runbooks/                    # 7 Enterprise PDF Runbooks
 │   │   │   ├── crm-customer-sync-failure.pdf
@@ -251,7 +251,7 @@ resolveiq/
 | **Python** | 3.13+ | Backend runtime |
 | **uv** | latest | Fast Python package & venv manager |
 | **Node.js** | 18+ | Frontend JavaScript runtime |
-| **Snowflake Account** | Cortex AI enabled | LLM inference (Optional if using Sandbox mode) |
+| **Groq API Key** | From [console.groq.com](https://console.groq.com) | LLM inference (Optional if using Sandbox mode) |
 
 ---
 
@@ -278,22 +278,18 @@ cp .env.example .env
 #### Configure `.env`:
 
 ```env
-# Snowflake Cortex AI Credentials
-SNOWFLAKE_PAT="your-snowflake-personal-access-token"
-SNOWFLAKE_ACCOUNT_IDENTIFIER="your-account-identifier"
+# Groq API credentials
+GROQ_API_KEY="your-groq-api-key"
 
-# Optional: Override base URL if using a custom Snowflake PrivateLink/endpoint
-# SNOWFLAKE_CORTEX_BASE_URL="https://your-account-identifier.snowflakecomputing.com/api/v2/cortex/v1"
-
-# LLM model hosted on Snowflake Cortex (e.g., llama3.1-70b, llama3.1-8b)
-LLM_MODEL_NAME="llama3.1-70b"
+# LLM model hosted on Groq
+LLM_MODEL_NAME="llama-3.3-70b-versatile"
 
 # App Security & Database
 SECRET_KEY="your-secret-key-here"
 DATABASE_URL="sqlite+aiosqlite:///test.db"
 ```
 
-> **Note:** If you want to run purely in **Sandbox Mode**, you can start the backend without Snowflake credentials or run the frontend independently!
+> **Note:** If you want to run purely in **Sandbox Mode**, you can start the backend without Groq credentials or run the frontend independently!
 
 #### Launch Backend Server:
 
@@ -423,10 +419,10 @@ Content-Type: application/json
 
 | Component | Technology | Description |
 |---|---|---|
-| **AI LLM Inference** | ❄️ **Snowflake Cortex AI** | Large Language Models (`llama3.1-70b`, `llama3.1-8b`) via Cortex REST API |
+| **AI LLM Inference** | ⚡ **Groq AI** | Large Language Models (`llama-3.3-70b-versatile`) via Groq API |
 | **Embeddings** | **Sentence Transformers** | `all-MiniLM-L6-v2` generating 384-dimensional dense semantic vectors |
 | **Vector Index** | **FAISS (IndexFlatL2)** | Millisecond exact Euclidean distance vector retrieval |
-| **Orchestration** | **LangChain** | Document chunking (`RecursiveCharacterTextSplitter`), prompt chaining, and Cortex OpenAI wrapper |
+| **Orchestration** | **LangChain** | Document chunking (`RecursiveCharacterTextSplitter`), prompt chaining, and Groq wrapper |
 | **API Server** | **FastAPI + Uvicorn** | Async ASGI backend with Pydantic request validation and non-blocking thread execution |
 | **Frontend Framework** | **React 19 + Vite 8** | Modern reactive component architecture with sub-second HMR |
 | **Styling** | **Tailwind CSS 4** | Glassmorphic finance-grade dark UI with responsive grids |
@@ -472,7 +468,7 @@ Provides pre-populated, verified shell scripts with an interactive terminal simu
 
 | Capability | Static Wikis / Confluence | Generic ChatGPT / Copilots | **ResolveIQ** |
 |---|:---:|:---:|:---:|
-| **Snowflake Cortex AI Integration** | ❌ No | ❌ No | ✅ **Native Cortex REST API** |
+| **Groq AI Integration** | ❌ No | ❌ No | ✅ **Native Groq API** |
 | **Grounded in Enterprise Runbooks** | ❌ Search only | ❌ Hallucination risk | ✅ **100% Grounded & Cited** |
 | **ServiceNow / Jira Ticket Extraction** | ❌ Siloed | ❌ Manual copy-paste | ✅ **Automated Vector Ingestion** |
 | **ITIL-Structured Output (RCA & SOP)** | ❌ Raw text | ⚠️ Generic advice | ✅ **Deterministic Schema** |
