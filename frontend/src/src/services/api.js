@@ -3,10 +3,6 @@ import { analyzePII } from "../utils/piiHasher";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api/v1";
 
-async function wait(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 export async function checkBackendHealth() {
   try {
     const controller = new AbortController();
@@ -48,36 +44,29 @@ export async function performSearch({ query, top_k = 5, mode = "diagnostic", inc
     };
   }
 
-  // Attempt live call to backend, retrying transient startup failures.
-  for (let attempt = 0; attempt < 2; attempt += 1) {
+  // Attempt live call to backend
+  try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 25000);
+    const response = await fetch(`${API_BASE_URL}/search`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query, top_k: Number(top_k), mode }),
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
 
-    try {
-      const response = await fetch(`${API_BASE_URL}/search`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query, top_k: Number(top_k), mode }),
-        signal: controller.signal,
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        return {
-          ...data,
-          latencyMs: Math.round(performance.now() - startTime),
-          isSandbox: false,
-        };
-      }
-
-      if (response.status !== 503) break;
-    } catch (err) {
-      console.warn("[ResolveIQ] Search attempt failed:", err);
-    } finally {
-      clearTimeout(timeoutId);
+    if (response.ok) {
+      const data = await response.json();
+      const duration = Math.round(performance.now() - startTime);
+      return {
+        ...data,
+        latencyMs: duration,
+        isSandbox: false,
+      };
     }
-
-    await wait(1500);
+  } catch (err) {
+    console.warn("[ResolveIQ] Live API error or timeout, engaging Enterprise Sandbox fallback:", err);
   }
 
   // Fallback to enterprise simulation

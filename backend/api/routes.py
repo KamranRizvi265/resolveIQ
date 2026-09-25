@@ -65,32 +65,21 @@ async def health(request: Request) -> HealthResponse:
 
 @router.post("/search", response_model=SearchResponse)
 async def search(payload: SearchRequest, request: Request) -> SearchResponse:
-    try:
-        service = getattr(request.app.state, "search_service", None)
-
-        if service is None:
-            raise HTTPException(
-                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-                detail="Search service is still initializing. Please retry shortly.",
-            )
-
-        result = await asyncio.to_thread(
-            service.search_with_sources,
-            payload.query,
-            payload.top_k,
-            payload.mode,
-        )
-
-        return SearchResponse.model_validate(result)
-
-    except HTTPException:
-        raise
-    except Exception as exc:
-        logger.exception("Search service request failed: %s", exc)
-        raise HTTPException(
-            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail=f"Search service error: {exc}",
-        ) from exc
+	try:
+		service = await _get_search_service(request)
+		result = await asyncio.to_thread(
+			service.search_with_sources,
+			payload.query,
+			payload.top_k,
+			payload.mode,
+		)
+		return SearchResponse.model_validate(result)
+	except Exception as exc:
+		logger.exception("Search service request failed: %s", exc)
+		raise HTTPException(
+			status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+			detail=f"Search service error: {exc}",
+		) from exc
 
 
 class PIISanitizeRequest(BaseModel):
