@@ -277,7 +277,7 @@ export default function SearchConsole({
             {showPiiPreview && (
               <div className="mt-2.5 p-2.5 rounded-xl bg-slate-900 text-white font-mono text-xs border border-slate-700 space-y-1 animate-in fade-in duration-150">
                 <span className="text-[10px] text-cyan-400 font-bold uppercase tracking-wider block font-sans">
-                  Payload forwarded to Snowflake Cortex AI & FAISS Vector Store:
+                  Payload forwarded to Groq AI & FAISS Vector Store:
                 </span>
                 <p className="text-slate-200 leading-relaxed break-all select-all">
                   {piiAnalysis.sanitizedText}
